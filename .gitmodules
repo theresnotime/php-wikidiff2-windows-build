@@ -1,0 +1,3 @@
+[submodule "mediawiki-php-wikidiff2"]
+	path = mediawiki-php-wikidiff2
+	url = https://github.com/wikimedia/mediawiki-php-wikidiff2

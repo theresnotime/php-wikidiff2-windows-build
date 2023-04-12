@@ -1,0 +1,41 @@
+name: Build and Package
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["7.4"]
+        arch: [x64]
+        ts: [nts]
+    runs-on: windows-latest
+    continue-on-error: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Setup PHP
+        id: setup-php
+        uses: cmb69/setup-php-sdk@v0.7
+        with:
+          version: ${{matrix.version}}
+          arch: ${{matrix.arch}}
+          ts: ${{matrix.ts}}
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{matrix.arch}}
+          toolset: ${{steps.setup-php.outputs.toolset}}
+      - name: Build mediawiki-php-wikidiff2
+        run: |
+          cd mediawiki-php-wikidiff2
+          phpize
+          ./configure
+          nmake
