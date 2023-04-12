@@ -38,5 +38,15 @@ jobs:
           cd mediawiki-php-wikidiff2
           copy ../config.w32 config.w32
           phpize
-          ./configure
+          ./configure --enable-wikidiff2 --with-prefix=${{steps.setup-php.outputs.prefix}}
           nmake
+      - name: Package
+        run: |
+          md binaries
+          copy mediawiki-php-wikidiff2/COPYING binaries
+          Get-ChildItem -Recurse -Filter "php_wikidiff2.dll" | ForEach-Object {Copy-Item -Path $_.FullName -Destination "binaries"}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: php_wikidiff2-${{matrix.version}}-${{matrix.arch}}-${{matrix.ts}}
+          path: binaries
