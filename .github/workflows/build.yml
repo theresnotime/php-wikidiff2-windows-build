@@ -36,6 +36,7 @@ jobs:
       - name: Build mediawiki-php-wikidiff2
         run: |
           cd mediawiki-php-wikidiff2
+          copy config.m4 config.w32
           phpize
           ./configure
           nmake
