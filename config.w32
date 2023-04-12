@@ -1,0 +1,5 @@
+ARG_ENABLE('wikidiff2', 'enable wikidiff2 support', 'no');
+
+if (PHP_WIKIDIFF2 != "no") {
+    EXTENSION("wikidiff2", "src/php_wikidiff2.cpp src/lib/Wikidiff2.cpp src/lib/Formatter.cpp src/lib/TableFormatter.cpp src/lib/InlineFormatter.cpp src/lib/InlineJSONFormatter.cpp src/lib/TextUtil.cpp src/lib/LineDiffProcessor.cpp src/lib/WordDiffCache.cpp src/lib/WordDiffSegmenter.cpp src/lib/WordDiffStats.cpp", true);
+}
